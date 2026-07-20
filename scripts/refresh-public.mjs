@@ -6,6 +6,8 @@ const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const siteRoot = path.resolve(scriptDir, "..");
 const sourceRoot = path.resolve(siteRoot, "..");
 const publicRoot = path.join(siteRoot, "public");
+const privateArtifactUrl =
+  /https:\/\/claude\.ai\/code\/artifact\/[0-9a-f-]+/i;
 
 const htmlFiles = (await readdir(sourceRoot))
   .filter((name) => /^amd-[a-z0-9-]+\.html$/.test(name))
@@ -44,7 +46,11 @@ await mkdir(publicRoot, { recursive: true });
 
 for (const name of htmlFiles) {
   const source = await readFile(path.join(sourceRoot, name), "utf8");
-  await writeFile(path.join(publicRoot, name), sanitizeHtml(name, source));
+  const output = sanitizeHtml(name, source);
+  if (privateArtifactUrl.test(output)) {
+    throw new Error(`${name} still contains a private Claude artifact URL`);
+  }
+  await writeFile(path.join(publicRoot, name), output);
 }
 
 await cp(

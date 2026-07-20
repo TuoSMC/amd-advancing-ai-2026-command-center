@@ -5,6 +5,9 @@ Public, trilingual web edition of the AMD Advancing AI 2026 command center.
 The repository contains only the deployable website. Internal research drafts,
 handoff material, and QA evidence are intentionally excluded.
 
+All product navigation stays inside the public site and requires no sign-in.
+Source citations may open the original publisher's website.
+
 ## Local validation
 
 ```bash
