@@ -2,6 +2,8 @@
 
 Public, trilingual web edition of the AMD Advancing AI 2026 command center.
 
+[Open the live GitHub Pages site](https://tuosmc.github.io/amd-advancing-ai-2026-command-center/)
+
 The repository contains only the deployable website. Internal research drafts,
 handoff material, and QA evidence are intentionally excluded.
 
@@ -17,6 +19,11 @@ npm start
 ```
 
 The canonical entry point redirects to `public/amd-command-center.html`.
+
+## Deployment
+
+Every push to `main` publishes the committed `public/` directory through the
+repository's GitHub Pages workflow.
 
 ## Evidence boundary
 
