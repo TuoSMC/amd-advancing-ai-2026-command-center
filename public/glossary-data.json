@@ -1,0 +1,62 @@
+{
+ "open-rack-scale": {
+  "n": "Open Rack-Scale 開放機櫃級運算",
+  "w": "Open Rack-Scale(開放機櫃級運算)是一種把「整座 rack(機櫃)」而非「單顆 GPU 或單台 server」當作最小運算與採購單位的資料中心設計典範,且關鍵在於它以開放標準拼裝而成——由多家廠商依公開規格供應可互換的積木,而非由單一廠商交付封閉整櫃。機制上,一座 AI rack 內把數十顆 GPU 透過高頻寬 scale-up fabric 綁成單一記憶體/運算域(讓整櫃「表現得像一顆巨大 GPU」),再以 scale-out 網路串接多櫃",
+  "v": "競爭邏輯是開放 vs 專有,不只是規格。(1) 記憶體/容量:AMD 主打「更大記憶體→更少 accelerator 服務同一模型→更低 TCO」,MI355X 為 288 GB HBM3E / 8 TB/s(對比 Nvidia B200 約 180 GB),MI400 preview 為 432 GB HBM4 [roadmap];Tom's Hardware 報導 Helios 對 Nvidia Vera Rubin 主打「多 50% 記憶體」(來源:",
+  "x": "Nvidia 的對應是 GB200 NVL72 / GB300 NVL72 整櫃系統(72 顆 Blackwell GPU + 36 顆 Grace CPU,以專有的 NVLink / NVLink Switch System 綁成單一域,GB200 提供 130 TB/s 櫃內 GPU 互連、13.4 TB 統一記憶體、1.44 EF FP4;來源:NVIDIA GB200 NVL72),下一代為 Vera Rubin NVL144(end-2026,8"
+ },
+ "orw": {
+  "n": "Open Rack Wide / OCP",
+  "w": "Open Rack Wide(ORW,又稱「Open Rack for AI」) 是 Meta 於 OCP Global Summit 2025(2025 年 10 月, San Jose) 提交給 Open Compute Project 的一套開放「AI 機櫃」機構標準,是現有 Open Rack V3(ORV3) 的 double-wide(加寬) 後繼版。OCP 本身是 Facebook/Meta 於 2011 年發起的開放硬體社群,把資料中心的機",
+  "v": "這是開放機櫃 vs 專有整櫃的商業模式之爭,不只是規格之爭。Nvidia 的 NVL72 是「近乎成品的封閉整櫃」,底盤、NVLink scale-up、整合利潤都由 Nvidia 掌握;ORW 則把機櫃底盤/供電/散熱/scale-up(UALink)/scale-out(Ultra Ethernet)全部開源,AMD 只出參考設計,把整合工作留給多家 OEM/ODM。三個具體競爭邏輯:(1)開放 vs 專有——買家不再被鎖進單一供應商的封閉櫃,加速器、",
+  "x": "NVL72,現貨世代為 GB200 NVL72(72 顆 Blackwell GPU、NVLink/NVLink Switch 串成單一 scale-up 域、~120–132 kW/櫃、已量產),對打 Helios roadmap 的下一代是 Vera Rubin NVL72(72 Rubin GPU + 36 Vera CPU、第 3 代 MGX 機構、800 VDC 供電,2H 2026 出貨),再往後是 Kyber / Rubin Ultra(20"
+ },
+ "ualink": {
+  "n": "UALink",
+  "w": "UALink(Ultra Accelerator Link)是一套開放標準的 scale-up 加速器互連,用來在單一機櫃/pod 內把數十至上千顆 GPU(加速器)直接串成一個高頻寬、低延遲、記憶體語意(memory-semantic) 的網路——讓 GPU 之間能做直接的 load/store/atomic,而不必走沉重的 TCP/IP 網路堆疊。它用一套為加速器優化的輕量四層堆疊(Physical / Data Link / Transport / ",
+  "v": "競爭邏輯是「開放 vs 專有」的商品化攻勢,四個支點:①多廠商——UALink 董事會含 AMD、Astera Labs、AWS、Cisco、Google、HPE、Intel、Meta、Microsoft,2025-01 再加 Alibaba、Apple、Synopsys,會員逾 75 家,關鍵缺席者正是 Nvidia;買家可混搭積木而非只能買密封整櫃。②容量互補——UALink 搭 AMD 記憶體優勢(MI355X 288 GB HBM3E 對 B200",
+  "x": "NVLink / NVSwitch(scale-up)+ 專有整櫃 NVL72。現役 GB200 NVL72 用 NVLink 5,單 GPU 1.8 TB/s、整櫃 130 TB/s all-to-all;CES 2026(2026-01-05)Nvidia 發表並宣布量產的 Vera Rubin NVL72 升級到 NVLink 6,單 GPU 3.6 TB/s、整櫃 260 TB/s scale-up(Nvidia · Tom's Hardware "
+ },
+ "uec": {
+  "n": "Ultra Ethernet (UEC)",
+  "w": "Ultra Ethernet(UEC)是由 Ultra Ethernet Consortium(隸屬 Linux Foundation)制定的開放 scale-out AI 網路標準,2025 年 6 月 11 日發布 Specification 1.0(560+ 頁的完整通訊堆疊)(UEC 官方發布 · Linux Foundation)。它要解決的病灶是傳統 Ethernet 在 AI 叢集裡的「擁塞與尾延遲(tail latency)」:標準 RoC",
+  "v": "競爭邏輯是開放標準 vs 專有整合。UEC 由 AMD、Broadcom、Cisco、Intel、Meta、Microsoft、Oracle 等擔任 steering members,Nvidia 不是 UEC 成員(產業報導);客戶因此能混搭多廠商——switch 選 Arista/Cisco/Broadcom Tomahawk、NIC 選 AMD Pensando 或 Broadcom,不被單一供應商綁死。走的是標準 Ethernet 的 mercha",
+  "x": "Spectrum-X Ethernet 平台(Spectrum-4 / SN5600 switch + BlueField-3 / ConnectX-8 SuperNIC),以及跨資料中心的 Spectrum-XGS(scale-across)(Nvidia 官方 · Spectrum-XGS)。一句話比較:Spectrum-X 做的是同一件事(在 Ethernet 上加 adaptive routing + 遙測擁塞控制,Nvidia 自報比通用 Eth"
+ },
+ "dlc": {
+  "n": "DLC 直接液冷 (Direct Liquid Cooling)",
+  "w": "DLC(Direct Liquid Cooling,直接液冷)是把冷卻液(水或 EGW 乙二醇水溶液)透過 cold plate(冷板)直接貼在最發熱的晶片(GPU/CPU)上「液對晶片」帶走熱,而不是靠風扇吹過散熱鰭片。一套 rack 級 DLC 分三層:(1) cold plate——貼晶片的微流道銅板,直接吸熱;(2) manifold / CDM(垂直分歧管)——沿機櫃把冷液分送到每個節點、收回熱液;(3) CDU(Coolant Distribu",
+  "v": "關鍵在於——Nvidia 定義「參考熱設計」,但不製造那條液冷迴路。NVL72 是 Nvidia 規範好的封閉參考機櫃,cold plate/CDU/manifold 的實際製造、整合、灌液、洩漏測試、量產與售後全外包給 OEM/ODM 與熱交換廠。所以 DLC 是交付能力的護城河,不是規格戰:(1) 開放 vs 專有——Supermicro 的 DLC 廠商中立,同一套 cold plate/CDU/manifold 能同時服務 Nvidia GB200",
+  "x": "Nvidia 的對應是 NVL72 液冷參考機櫃 + MGX 模組化設計,並宣布以 800 VDC 供電支撐未來 Rubin(~190–230 kW)/Kyber Rubin Ultra NVL576(~600 kW)級機櫃(roadmap,Introl · NVIDIA blog)。一句話比較:Nvidia 交付的是「熱設計規格與參考架構」,真正的 DLC 硬體迴路仍由 Supermicro、Vertiv、Boyd、CoolIT 等夥伴製造——在「誰能把"
+ },
+ "helios": {
+  "n": "AMD Helios",
+  "w": "AMD Helios 是 AMD 於 2026 年推出的 rack-scale(整櫃級)AI 參考設計——它不是一張卡、也不是一台伺服器,而是把 6th Gen EPYC「Venice」(Zen 6)CPU + Instinct MI400 系列 GPU(出貨配置為 MI455X;Oracle 首發線配 MI450)+ Pensando「Vulcano」800G DPU/NIC + ROCm 開放軟體堆疊,整合進一整個機櫃的開放藍圖。單櫃 72 顆 GPU",
+  "v": "三條具體邏輯。(1)開放 vs 專有:Nvidia NVL72/Vera Rubin 是單一供應商密封整櫃(NVLink 專有);Helios 走 ORW + UALink + Ultra Ethernet 開放積木,買家可混搭多廠商 GPU、交換器、系統整合商,不被鎖死。(2)記憶體容量:MI455X 每卡 432 GB HBM4 vs Vera Rubin 每 package 288 GB,AMD 自報整櫃記憶體容量與頻寬高約 50%(31 TB / ",
+  "x": "NVIDIA Vera Rubin NVL144(「Vera」= Nvidia 自研 ARM CPU,「Rubin」= 次世代 GPU;NVL144 = 72 個 Rubin package / 144 compute dies,連成單一專有 NVLink 域)。一句話比較:兩者都是 2026 年液冷整櫃、72-GPU 級平台;Vera Rubin FP4 峰值更高(3.6 vs 2.9 ExaFLOPS)且 Nvidia 稱量產/出貨時程領先(CES 2"
+ },
+ "anchor-oem": {
+  "n": "Anchor OEM(+ HPE 角色)",
+  "w": "「Anchor OEM」指晶片商在推出全新 rack-scale 平台時,(正式或事實上)指定的首發／主打 OEM 夥伴——由它率先與晶片商共同工程化參考機櫃、吸收早期整合風險(供電、散熱、fabric、韌體),並成為整個生態系的「燈塔案例(lighthouse)」讓其他 OEM 與客戶跟進。它的本質不是「賣最多」,而是替一套尚未被市場驗證的開放標準背書並跑通第一台。在 AMD Helios 這條線上,HPE 於 2025-12-02(HPE Discov",
+  "v": "競爭邏輯在「anchor 這個角色歸誰」。AMD 走開放路線(Open Rack Wide/OCP、UALink、Ultra Ethernet、ROCm),把 anchor OEM 的角色交給 OEM(HPE)去共同設計機櫃——這意味著(1)機櫃設計權與差異化留在 OEM 手上,多家 OEM 可各自做出不同散熱/密度/成本的 Helios 櫃;(2)多廠商供應,客戶不被單一供應鏈綁死;(3)AMD 的記憶體容量牌(MI355X 288 GB HBM3E;M",
+  "x": "NVIDIA GB200/GB300 NVL72 + DGX 參考設計 + NVIDIA-Certified Systems 認證計畫。Nvidia 不指定單一 anchor OEM,而是以自家 DGX/NVL72 當「參考錨點」,同時認證 Dell、Supermicro、HPE、Lenovo 及 ODM(Foxconn/Quanta/Wistron)一起照 spec 出貨(NVIDIA GB200 NVL72)。一句話比較: Nvidia 的「ancho"
+ },
+ "odm": {
+  "n": "ODM 威脅(Wiwynn / QCT)+ 整合溢價",
+  "w": "這是描述 AMD「開放機櫃」路線對系統廠競爭結構影響的雙面刃概念。先分清兩種角色:ODM(Original Design Manufacturer) 如 Wiwynn(緯穎,緯創分拆)、QCT(Quanta Cloud Technology,廣達旗下),替 hyperscaler 代設計代工、掛客戶自有品牌或直供,靠製造規模與成本取勝、毛利薄但量體大;OEM(Original Equipment Manufacturer) 如 Supermicro、Del",
+  "v": "這裡的「競爭力」指開放、多供應商機櫃模式相對 Nvidia 封閉整櫃的結構優勢——而 ODM 威脅正是這份開放性的代價(同一把刀的兩面)。(1)開放 vs 專有:AMD 用 UALink(scale-up)+ Ultra Ethernet(scale-out)+ Open Rack Wide(機櫃)三層開放標準,讓客戶用 AMD Pensando「Vulcano」NIC + Broadcom/Arista 交換機自由組櫃,不必被 Nvidia NVLink",
+  "x": "Nvidia NVL72 封閉整櫃(GB200/GB300 NVL72,NVLink/NVSwitch 專有) 與其模組化參考架構 NVIDIA MGX。一句話比較:Nvidia 的 NVL72 交付「近乎成品的專有整櫃」,把整合溢價留在 Nvidia 自己手上、ODM 只能照譜組裝賺薄利;AMD 交付「開放參考設計」,把整合價值釋放給 OEM/ODM 競爭——這對快、會散熱的系統廠是機會,對靠賣封閉整合的一方是威脅,對低成本 ODM 是同一扇打開的門。關"
+ },
+ "mlperf": {
+  "n": "獨立 benchmark(MLPerf / SemiAnalysis)",
+  "w": "「獨立 benchmark」指由非銷售方的第三方、以公開且固定的工作負載、在matched-precision(同數值精度)+ 同並發/延遲條件下量測 AI 加速器效能與成本的評測,用來取代廠商自選條件的行銷數字。兩大裁判機制不同:MLPerf(由 MLCommons 這個涵蓋 Nvidia/AMD/Google 等的產業聯盟治理)採「submission + closed division 同儕審查 + harness 稽核」模式——各廠自行提交、但必須",
+  "v": "獨立 benchmark 是 AMD 開放軟體故事的裁判,原因是它把戰場從 Nvidia 的主場(CUDA 生態成熟度、廠商 demo)搬到中立場地,而 AMD 的開放特性剛好在這裡才兌現價值:(1) 開放 vs 專有——ROCm 開源、vLLM/SGLang 原生支援,InferenceX 這種「每晚重測」的連續 benchmark 能即時捕捉 ROCm 的軟體進步(SemiAnalysis 自承 2025-10 起 ROCm bug 頻率已低「數個數量",
+  "x": "benchmark 不是「產品」,Nvidia 的對應是兩層——對外它有自己的 vendor benchmark(developer.nvidia.com 的 LLM inference cost 部落格、TensorRT-LLM 效能宣稱,性質等同 AMD 自報),對內它更擅長反客為主地擁抱同一個中立裁判:Nvidia 官方大力行銷「NVIDIA Blackwell Leads on SemiAnalysis InferenceMAX」與 MLPerf "
+ },
+ "reference-design": {
+  "n": "參考設計(Reference Design)",
+  "w": "「參考設計(Reference Design)」是晶片商把整座 AI 機櫃當成一張「藍圖」交付給 OEM/ODM 的做法——不只給 GPU,而是把 CPU、GPU、DPU/NIC、互連拓撲、供電匯流排(busbar)、液冷歧管(manifold)、機構尺寸與韌體堆疊全部規範好,OEM 依此「照圖出貨」並可再客製。AMD 的具體載體是 \"Helios\" 機櫃:它建構在 Meta 於 OCP 2025 提交的 Open Rack Wide(ORW) 開放藍圖上",
+  "v": "競爭邏輯是「開放 vs 專有」。Nvidia 的機櫃級答案是 NVL72,本質是 Nvidia 定義、以 NVLink/NVSwitch 專有互連鎖死的整櫃方案——OEM 只能在 Nvidia 畫好的框內做少量客製,議價與差異化空間窄。AMD 走相反路線:把 Helios「捐」進 OCP 生態(建構於 Meta 的 ORW 開放規格),用 UALink + Ultra Ethernet 兩個開放互連取代 NVLink,任何 OEM/ODM 都能取用、延伸、",
+  "x": "對應的是 NVIDIA MGX(模組化參考架構)加 NVL72(整櫃參考設計):MGX 同樣讓 OEM/ODM 快速跟進,Nvidia 自報可砍開發成本達 3/4、開發時程縮至約六個月,已被 ASUS、Gigabyte、QCT、Pegatron、Supermicro 等 200+ 夥伴採用,支援 Blackwell/Rubin(NVIDIA MGX · DCD)。一句話比較:MGX/NVL72 是「Nvidia 自家主導、圍繞 NVLink 專有互連的模組"
+ }
+}
