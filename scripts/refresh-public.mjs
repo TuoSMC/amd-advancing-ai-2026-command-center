@@ -8,6 +8,8 @@ const sourceRoot = path.resolve(siteRoot, "..");
 const publicRoot = path.join(siteRoot, "public");
 const privateArtifactUrl =
   /https:\/\/claude\.ai\/code\/artifact\/[0-9a-f-]+/i;
+const obsoleteGtmPriority =
+  /OEM\s*(?:->|&#x2192;|\\u2192)\s*Channel\s*(?:->|&#x2192;|\\u2192)\s*Enterprise/i;
 
 const htmlFiles = (await readdir(sourceRoot))
   .filter((name) => /^amd-[a-z0-9-]+\.html$/.test(name))
@@ -49,6 +51,9 @@ for (const name of htmlFiles) {
   const output = sanitizeHtml(name, source);
   if (privateArtifactUrl.test(output)) {
     throw new Error(`${name} still contains a private Claude artifact URL`);
+  }
+  if (obsoleteGtmPriority.test(output)) {
+    throw new Error(`${name} still contains the reversed GTM priority`);
   }
   await writeFile(path.join(publicRoot, name), output);
 }
