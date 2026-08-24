@@ -86,6 +86,8 @@ main:focus{outline:none}
 .gnin{max-width:1180px;height:var(--gnh);margin:0 auto;padding:0 18px;display:flex;align-items:center;gap:4px}
 .gnls{display:flex;gap:2px;min-width:0;overflow-x:auto;scrollbar-width:none}
 .gnls::-webkit-scrollbar{display:none}
+.gnl.portfolio-back{flex:none;margin-right:4px;border:1px solid var(--line);font-weight:700;color:var(--accink)}
+.gnl.portfolio-back:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 .gnl,.gnm,.gntoc,.gnth,.lgb{
   min-height:44px;border:0;background:transparent;color:var(--soft);cursor:pointer;
   font-family:var(--tw);font-size:13px;font-weight:400;line-height:1;
@@ -369,6 +371,7 @@ h1[id],h2[id],h3[id],h4[id]{scroll-margin-top:calc(var(--gnh) + 16px)}
   .gnmore{margin-left:0}
   .langsw{margin-left:auto}
   .gnl{padding:8px 6px;font-size:12px}
+  .portfolio-back .portfolio-back-zh{display:none}
   .hero .wrap,.wrap{padding-left:14px;padding-right:14px}
   .lede-proof,.nums{grid-template-columns:1fr}
   .helios-image-action{
@@ -377,6 +380,7 @@ h1[id],h2[id],h3[id],h4[id]{scroll-margin-top:calc(var(--gnh) + 16px)}
   .helios-links{grid-template-columns:1fr}
   h1{font-size:24px}
 }
+@media print{.portfolio-back{display:none}}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition:none!important}
@@ -1267,6 +1271,19 @@ window.__GLO_I18N__={"open-rack-scale":{"e":{"n":"Open Rack-Scale Computing","w"
 })();
 </script>
 <script>
+(function(){
+  var nav=document.querySelector('.gnin');
+  if(!nav) return;
+  var back=document.createElement('button');
+  back.className='gnl portfolio-back';
+  back.type='button';
+  back.setAttribute('aria-label','Back to previous page / 返回上一頁');
+  back.innerHTML='<span aria-hidden="true">←&nbsp;</span><span>Back</span><span class="portfolio-back-zh" lang="zh-Hant">&nbsp;/ 返回上一頁</span>';
+  back.addEventListener('click',function(){
+    window.history.length>1 ? window.history.back() : window.close();
+  });
+  nav.prepend(back);
+})();
 (function(){
   var mb=document.getElementById('gnmb'), mp=document.getElementById('gnmp');
   var tb=null, dr=null;
